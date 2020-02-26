@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: health2gether-gateway
+  profiles:
+    active:
+      dev
+server:
+  port: 9091
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    user:
+      path: /user/**
+      serviceId: HEALTH2GETHER-USER

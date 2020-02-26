@@ -1,0 +1,7 @@
+spring:
+  zipkin:
+    baseUrl: http://health2gether-zipkin:9411/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://health2gether-discovery-server:8761/eureka/
