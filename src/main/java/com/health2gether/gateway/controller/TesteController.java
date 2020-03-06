@@ -5,10 +5,7 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/teste")
-public class UserController {
+public class TesteController {
 
     @Autowired
     private DiscoveryClient discoveryClient;
@@ -37,6 +34,19 @@ public class UserController {
     public String getUsers() {
         return "{\"users\":[{\"name\":\"Lucas\", \"country\":\"Brazil\"}," +
                 "{\"name\":\"Jackie\",\"country\":\"China\"}]}";
+    }
+
+    @RequestMapping("/users-auth")
+    @ResponseBody
+    public String getUsersAuth() {
+        return "{\"users\":[{\"name\":\"Lucas User Auth\", \"country\":\"Brazil\"}," +
+                "{\"name\":\"Jackie\",\"country\":\"China\"}]}";
+    }
+
+    @PostMapping("/teste-post")
+    @ResponseBody
+    public String teste2() {
+        return "ok";
     }
 
 }
