@@ -16,7 +16,7 @@ import java.util.List;
  * @since 27/10/2019 11:09
  */
 @RestController
-@RequestMapping("/teste")
+@RequestMapping("/gateway")
 public class TesteController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class TesteController {
 
     @GetMapping("/teste")
     public ResponseEntity<String> teste() {
-        List<ServiceInstance> instances = discoveryClient.getInstances("netflix-user");
+        List<ServiceInstance> instances = discoveryClient.getInstances("HEALTH2GETHER-USER");
         System.out.println(instances.get(0).getUri().toString());
         return new ResponseEntity<>("Teste", HttpStatus.OK);
     }
