@@ -30,7 +30,7 @@ public class UserService {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    public UserResponse findUser(final String username, final String password) {
+    public UserResponse findUser(final String email, final String password) {
         List<ServiceInstance> instances = discoveryClient.getInstances("HEALTH2GETHER-USER");
         String serviceUri = String.format("%s/users/", instances.get(0).getUri().toString());
 
@@ -39,7 +39,7 @@ public class UserService {
         HttpEntity entity = new HttpEntity(headers);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(serviceUri)
-                .queryParam("email", username)
+                .queryParam("email", email)
                 .queryParam("password", password);
 
         final ResponseEntity<UserResponse> exchange = restTemplate

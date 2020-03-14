@@ -28,11 +28,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication auth)
             throws AuthenticationException {
-        String username = auth.getName();
+        String email = auth.getName();
         String password = auth.getCredentials()
                 .toString();
 
-        final UserResponse userResponse = userService.findUser(username, password);
+        final UserResponse userResponse = userService.findUser(email, password);
 
         if(userResponse != null) {
             return new UsernamePasswordAuthenticationToken

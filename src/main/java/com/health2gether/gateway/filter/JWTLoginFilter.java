@@ -37,12 +37,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
                 .readValue(request.getInputStream(), AccountCredentials.class);
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        credentials.getUsername(), credentials.getPassword(), Collections.emptyList()));
+                        credentials.getEmail(), credentials.getPassword(), Collections.emptyList()));
     }
 
     @Override
     protected void successfulAuthentication (HttpServletRequest request, HttpServletResponse response,
-            FilterChain filterChain, Authentication auth) {
+            FilterChain filterChain, Authentication auth) throws IOException {
         TokenAuthenticationService.addAuthentication(response, auth.getName(), auth.getAuthorities());
     }
 

@@ -1,5 +1,7 @@
 package com.health2gether.gateway.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.health2gether.gateway.dto.TokenResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Date;
@@ -31,20 +35,28 @@ public class TokenAuthenticationService {
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
 
-    public static void addAuthentication (HttpServletResponse response, String username,
-            final Collection<? extends GrantedAuthority> authorities) {
+    public static void addAuthentication (HttpServletResponse response, String email,
+            final Collection<? extends GrantedAuthority> authorities) throws IOException {
 
         final String roles = authorities.stream()
                 .map(authority -> authority.getAuthority())
                 .collect(Collectors.joining(","));
 
         final String token = Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .claim("roles", roles)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
 
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + token);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(mapper.writeValueAsString(new TokenResponse(TOKEN_PREFIX + " " + token)));
+        out.flush();
     }
 
     public static Authentication getAuthentication(HttpServletRequest request) {
