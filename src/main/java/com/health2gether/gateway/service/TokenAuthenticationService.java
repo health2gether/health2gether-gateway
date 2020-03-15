@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TokenAuthenticationService {
 
-    static final long EXPIRATION_TIME = Duration.ofDays(10).toMillis();
-    static final String SECRET = "FIAP_69AOJ_MY_SECRETS";
-    static final String TOKEN_PREFIX = "Bearer";
-    static final String HEADER_STRING = "Authorization";
+    private static final long EXPIRATION_TIME = Duration.ofDays(10).toMillis();
+    private static final String SECRET = "FIAP_69AOJ_MY_SECRETS";
+    private static final String TOKEN_PREFIX = "Bearer";
+    private static final String HEADER_STRING = "Authorization";
 
     public static void addAuthentication (HttpServletResponse response, String email,
             final Collection<? extends GrantedAuthority> authorities) throws IOException {

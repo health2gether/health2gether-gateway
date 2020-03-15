@@ -34,13 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .cors().and()
             .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login", "/user").permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/user/users").permitAll()
                 .antMatchers(
                         "**/actuator/**",
                         "**/h2-console/**",
                         "/gateway/teste"
                 ).permitAll()
-//                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),

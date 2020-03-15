@@ -36,7 +36,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if(userResponse != null) {
             return new UsernamePasswordAuthenticationToken
-                                (userResponse.getName(), password, Collections.singleton(new SimpleGrantedAuthority("USER")));
+                                (userResponse.getEmail(), password, Collections.singleton(new SimpleGrantedAuthority("USER")));
         } else {
             throw new
                     BadCredentialsException("External system authentication failed");

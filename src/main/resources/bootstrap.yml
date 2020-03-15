@@ -7,8 +7,13 @@ spring:
 server:
   port: 9091
 zuul:
-  sensitiveHeaders: Cookie,Set-Cookie,Access-Control-Allow-Origin
+  sensitiveHeaders: Access-Control-Allow-Origin
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
   routes:
     user:
       path: /user/**
       serviceId: HEALTH2GETHER-USER
+ribbon:
+  ReadTimeout: 60000
